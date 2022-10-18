@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="quizcotrol.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+    <div style="display: flex;" id="container">
+        <div style="width: 50%; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;" id="form">
+            <h1>Log in - kuis 3</h1>
+            <form action="" method="post" id="submit" style="width: 100%;display: flex; flex-direction: column; justify-content: center; align-items: center; ">
+                <div class="input_warp" style="width: 60%;">
+                    <label for="input_text">Username</label>
+                    <div class="input_field" style="margin-top: 10px; margin-bottom: 10px;width: 100%;">
+                        <input type="text" name="" oninput="refresh()" id="input_text" style="border: none;height: 25px;border-bottom: 1px solid black ;width: 100%;padding: 10px; box-sizing: border-box;" placeholder="Username">
+                        <span id="error_user" style="margin-top: 10px;">Username salah</span>
+                        <span id="error_isi" style="margin-top: 10px;">Isi username</span>
+                    </div>
+                </div>
+                <div style="width: 60%;" class="input_warp">
+                    <label  for="input_text">Password</label>
+                    <div  style="margin-top: 10px;margin-bottom: 10px; width: 100%;" class="input_field">
+                        <input style="border: none;height: 25px;border-bottom: 1px solid black ;width: 100%;padding: 10px; box-sizing: border-box;" type="password" oninput="refre()" name="" id="input_password" placeholder="Password">
+                        <span id="error_pass" style="margin-top: 10px;">Password salah</span>
+                        <span id="error_isip" style="display: none; margin-top: 10px;" >Isi password</span>
+                    </div>
+                </div>
+                <div style="width: 55%;" class="input_warp">
+                        <input style="background-color: blue;width: 100%; color: white;height: 25px;margin-top: 10px;" type="button" onclick="login()"name="" id="" value="Login">
+                </div>                
+            </form>
+        </div>
+        <div style="width: 50%; height: 100vh; background-color: blue; display: flex; flex-direction: column; justify-content: center; align-items: center;" id="image" >
+            <img src="img/e65aa29e8969c901c0909b69578da55f.jpg" alt="" style="width: 250px; height: 300px;">
+        </div>
+    </div>
+    <div style="display: flex;flex-direction: column;align-items: center; justify-content: center;" id="games">
+        <p id="name" style="position: absolute; top: 20px; right: 58%;color: red;"></p>
+        <div id="game"></div>
+        <button id="btn" style="width: 40%; height: 25px;background-color: blue;color: white; display: none;" onclick="location.reload()">Reset</button>
+        
+    </div>
+
+    <script>
+        function login(){
+            var text_input = document.getElementById("input_text")
+            var text_pass = document.getElementById("input_password")
+            var error = document.getElementsByClassName("error_msg")
+            var text_inputs = document.getElementById("input_text").value
+            var text_passs = document.getElementById("input_password").value
+
+            
+
+            if(document.getElementById("input_text").value.length < 1 && document.getElementById("input_password").value.length < 1){
+                document.getElementById("error_isi").style.display = "block"
+                document.getElementById("input_text").style.border = "1px solid red"
+                document.getElementById("error_isip").style.display = "block"
+                document.getElementById("input_password").style.border = "1px solid red"
+            }else if(document.getElementById("input_password").value.length < 1 ){
+                document.getElementById("error_isip").style.display = "block"
+                document.getElementById("input_password").style.border = "1px solid red"
+            }else if(document.getElementById("input_text").value.length < 1 ){
+                document.getElementById("error_isi").style.display = "block"
+                document.getElementById("input_text").style.border = "1px solid red"
+            }else if(text_inputs == "kemal" && text_passs == "kemal"){
+                swal({
+                    title: "Good job!",
+                    text: "You clicked the button!",
+                    icon: "success",
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                  });
+                  var time
+                  time = setTimeout(startGame,5000)
+            }else if(text_inputs != "kemal" && text_passs != "kemal" ){
+                document.getElementById("error_user").style.display = "block"
+                document.getElementById("input_text").style.border = "1px solid red"
+                document.getElementById("error_pass").style.display = "block"
+                document.getElementById("input_password").style.border = "1px solid red"
+            }
+            
+            else if(text_inputs != "kemal" ){
+                document.getElementById("error_user").style.display = "block"
+                document.getElementById("input_text").style.border = "1px solid red"
+            }else if(text_passs != "kemal" ){
+                document.getElementById("error_pass").style.display = "block"
+                document.getElementById("input_password").style.border = "1px solid red"
+            }
+
+        }
+
+        function refresh(){
+            document.getElementById("error_isi").style.display = "none"
+            document.getElementById("error_user").style.display = "none"
+            document.getElementById("input_text").style.border = "1px solid black"
+        }
+        function refre(){
+            document.getElementById("error_isip").style.display = "none"
+            document.getElementById("error_pass").style.display = "none"
+            document.getElementById("input_password").style.border = "1px solid black"
+        }
+        var myGamePiece;
+
+        function startGame() {
+
+            document.getElementById("btn").style.display="block"
+            document.getElementById("form").style.display="none"
+            document.getElementById("image").style.display="none"
+            var usergame = document.getElementById("input_text").value
+            document.getElementById("name").innerHTML = "Username: " + usergame
+            myGameArea.start();
+            myGamePiece = new component(30, 30, "red", 10, 120);
+        }
+        
+        var myGameArea = {
+            canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 480;
+        this.canvas.height = 270;
+        this.context = this.canvas.getContext("2d");
+        document.getElementById("game").insertBefore(this.canvas, document.getElementById("game").childNodes[0]);
+        this.interval = setInterval(updateGameArea, 20);
+        window.addEventListener('keydown', function (e) {
+            myGameArea.keys = (myGameArea.keys || []);
+            myGameArea.keys[e.keyCode] = (e.type == "keydown");
+        })
+        window.addEventListener('keyup', function (e) {
+            myGameArea.keys[e.keyCode] = (e.type == "keydown");            
+        })
+    }, 
+    clear : function(){
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+
+function component(width, height, color, x, y) {
+    this.gamearea = myGameArea;
+    this.width = width;
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;    
+    this.x = x;
+    this.y = y;    
+    this.update = function() {
+        ctx = myGameArea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+    this.newPos = function() {
+        this.x += this.speedX;
+        this.y += this.speedY;        
+    }    
+}
+
+function updateGameArea() {
+    myGameArea.clear();
+    myGamePiece.speedX = 0;
+    myGamePiece.speedY = 0;    
+    if (myGameArea.keys && myGameArea.keys[37]) {myGamePiece.speedX = -1; }
+    if (myGameArea.keys && myGameArea.keys[39]) {myGamePiece.speedX = 1; }
+    if (myGameArea.keys && myGameArea.keys[38]) {myGamePiece.speedY = -1; }
+    if (myGameArea.keys && myGameArea.keys[40]) {myGamePiece.speedY = 1; }
+    myGamePiece.newPos();    
+    myGamePiece.update();
+}
+</script>
+    </script>
+</body>
+</html>

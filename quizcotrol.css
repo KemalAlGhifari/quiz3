@@ -1,0 +1,19 @@
+#error_user{
+    display: none;
+}
+#error_isi{
+    display: none;
+}
+#error_pass{
+    display: none;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+canvas{
+    background-color: #f1f1f1;
+    
+}
+
+
